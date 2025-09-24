@@ -18,3 +18,4 @@ docker-compose down -v
 
 5. Visualiser la bd 
 docker exec -it mysql mysql -uuser -ppassword demo
+show tables;

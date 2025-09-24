@@ -12,5 +12,4 @@ abstract class Model {
     abstract public function create($data);
     abstract public function update($id, $data);
     abstract public function delete($id);
-
 }
