@@ -1,8 +1,6 @@
 # ProjetWebEventX
 
 
-## Sur ubuntu
-
 docker-compose build
 
 1. Démarrer les services
@@ -16,3 +14,7 @@ docker-compose down
 
 4. Supprimer tout (conteneurs + volumes)
 docker-compose down -v
+
+
+5. Visualiser la bd 
+docker exec -it mysql mysql -uuser -ppassword demo
