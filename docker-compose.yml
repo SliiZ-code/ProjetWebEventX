@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./eventx-api:/var/www/html
+      - ./server:/var/www/html
     depends_on:
       - db
 
