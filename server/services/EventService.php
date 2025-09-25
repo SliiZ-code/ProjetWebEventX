@@ -75,6 +75,8 @@ class EventService {
         
         return true;
     }
+
+    public function registerToEvent
     
 }
 ?>
