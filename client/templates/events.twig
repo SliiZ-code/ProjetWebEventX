@@ -1,0 +1,106 @@
+{% extends 'base.twig' %}
+
+{% block title %}Liste des Événements - EventX{% endblock %}
+
+{% block extra_head %}
+<style>
+    .message.error { background-color: #f8d7da; color: #721c24; padding: 1rem; border-radius: 5px; margin-bottom: 1rem; }
+    .stats { background-color: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .stats h2 { color: #007bff; margin: 0 0 0.5rem 0; }
+    .events-grid { display: grid; gap: 1.5rem; }
+    .event-card { display: block; background: white; border-radius: 8px; padding: 1.5rem; text-decoration: none; color: inherit; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; }
+    .event-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); text-decoration: none; color: inherit; }
+    .event-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+    .event-id { background-color: #007bff; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; }
+    .event-title { margin: 0; color: #333; font-size: 1.25rem; }
+    .event-description { color: #666; margin-bottom: 1rem; line-height: 1.5; }
+    .event-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; }
+    .detail-item { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #eee; }
+    .detail-label { font-weight: bold; color: #555; }
+    .detail-value { color: #333; }
+    .event-duration { margin-top: 1rem; padding: 1rem; background-color: #f8f9fa; border-radius: 4px; }
+    .duration-label { font-weight: bold; color: #007bff; margin-bottom: 0.5rem; }
+    .no-events { text-align: center; padding: 3rem 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .no-events-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .no-events h3 { color: #333; margin-bottom: 1rem; }
+    .no-events p { color: #666; }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Messages d'état -->
+    {% if not success %}
+        <div class="message error">
+            <strong>Erreur:</strong> {{ message|default('Une erreur inattendue s\'est produite.') }}
+        </div>
+    {% endif %}
+
+    <!-- Statistiques -->
+    {% if success and events_count > 0 %}
+        <div class="stats">
+            <h2>{{ events_count }} événement{{ events_count > 1 ? 's' : '' }} trouvé{{ events_count > 1 ? 's' : '' }}</h2>
+            <p>Explorez notre sélection d'événements passionnants</p>
+        </div>
+    {% endif %}
+
+    <!-- Liste des événements -->
+    {% if success and events_count > 0 %}
+        <div class="events-grid">
+            {% for event in events %}
+                <a href="event-detail.php?id={{ event.id }}" class="event-card">
+                    <div class="event-header">
+                        <h2 class="event-title">{{ event.name }}</h2>
+                        <div class="event-id">#{{ event.id }}</div>
+                    </div>
+                    
+                    <div class="event-body">
+                        <div class="event-description">
+                            {{ event.description|length > 150 ? event.description|slice(0, 150) ~ '...' : event.description }}
+                        </div>
+                        
+                        <div class="event-details">
+                            <div class="detail-item">
+                                <span class="detail-label">📅 Date de début</span>
+                                <span class="detail-value">{{ event.startDate }}</span>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <span class="detail-label">🏁 Date de fin</span>
+                                <span class="detail-value">{{ event.endDate }}</span>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <span class="detail-label">👤 Organisateur</span>
+                                <span class="detail-value">ID: {{ event.ownerId }}</span>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <span class="detail-label">📝 Créé le</span>
+                                <span class="detail-value">{{ event.creationDate }}</span>
+                            </div>
+                        </div>
+                        
+                        {% if event.duration %}
+                            <div class="event-duration">
+                                <div class="duration-label">⏱️ Durée estimée</div>
+                                <div class="duration-value">{{ event.duration }}</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Aucun événement trouvé -->
+        <div class="no-events">
+            <div class="no-events-icon">📅</div>
+            <h3>Aucun événement trouvé</h3>
+            <p>Il n'y a actuellement aucun événement à afficher.</p>
+            {% if not success %}
+                <p style="margin-top: 1rem; color: #dc3545;">
+                    Vérifiez votre connexion ou contactez l'administrateur.
+                </p>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

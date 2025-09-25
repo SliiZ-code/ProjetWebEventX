@@ -89,7 +89,7 @@ if (strpos($uri, '/api') === 0) {
                 "description" => "User login",
                 "input" => [
                     "body" => [
-                        "email" => "string (required)",
+                        "mail" => "string (required)",
                         "password" => "string (required)"
                     ]
                 ],
@@ -104,7 +104,7 @@ if (strpos($uri, '/api') === 0) {
                 "description" => "User registration",
                 "input" => [
                     "body" => [
-                        "email" => "string (required)",
+                        "mail" => "string (required)",
                         "password" => "string (required)",
                         "firstname" => "string (required)",
                         "lastname" => "string (required)"

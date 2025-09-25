@@ -1,0 +1,99 @@
+{% extends 'base.twig' %}
+
+{% block title %}{{ event.name|default('Détail événement') }} - EventX{% endblock %}
+
+{% block extra_head %}
+<style>
+    .back-button { display: inline-block; margin-bottom: 1.5rem; color: #007bff; text-decoration: none; font-weight: bold; }
+    .back-button:hover { text-decoration: underline; }
+    .event-detail { background: white; border-radius: 8px; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .event-header { border-bottom: 2px solid #007bff; padding-bottom: 1rem; margin-bottom: 2rem; }
+    .event-id { display: inline-block; background-color: #007bff; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.9rem; margin-bottom: 1rem; }
+    .event-title { margin: 0 0 1rem 0; color: #333; font-size: 2rem; }
+    .event-description { color: #666; font-size: 1.1rem; line-height: 1.6; margin: 0; }
+    .event-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .info-card { background: #f8f9fa; border-left: 4px solid #007bff; padding: 1rem; border-radius: 0 4px 4px 0; }
+    .info-label { font-weight: bold; color: #007bff; margin-bottom: 0.5rem; }
+    .info-value { color: #333; font-size: 1.1rem; }
+    .duration-card { background: linear-gradient(135deg, #007bff, #0056b3); color: white; padding: 1.5rem; border-radius: 8px; text-align: center; }
+    .duration-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .duration-value { font-size: 1.4rem; }
+    .error-message { text-align: center; background: white; border-radius: 8px; padding: 3rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .error-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .error-message h2 { color: #dc3545; margin-bottom: 1rem; }
+    .error-message p { color: #666; }
+</style>
+{% endblock %}
+
+{% block content %}
+    <a href="events.php" class="back-button">← Retour à la liste</a>
+    
+    {% if success and event %}
+        <div class="event-detail">
+            <div class="event-header">
+                <div class="event-id">#{{ event.id }}</div>
+                <h1 class="event-title">{{ event.name }}</h1>
+                {% if event.description %}
+                    <div class="event-description">
+                        {{ event.description }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="event-info">
+                {% if event.startDateFormatted %}
+                    <div class="info-card">
+                        <div class="info-label">📅 Date de début</div>
+                        <div class="info-value">{{ event.startDateFormatted }}</div>
+                    </div>
+                {% endif %}
+                
+                {% if event.endDateFormatted %}
+                    <div class="info-card">
+                        <div class="info-label">🏁 Date de fin</div>
+                        <div class="info-value">{{ event.endDateFormatted }}</div>
+                    </div>
+                {% endif %}
+                
+                {% if event.ownerId %}
+                    <div class="info-card">
+                        <div class="info-label">👤 Organisateur</div>
+                        <div class="info-value">ID: {{ event.ownerId }}</div>
+                    </div>
+                {% endif %}
+                
+                {% if event.creationDateFormatted %}
+                    <div class="info-card">
+                        <div class="info-label">📝 Créé le</div>
+                        <div class="info-value">{{ event.creationDateFormatted }}</div>
+                    </div>
+                {% endif %}
+                
+                {% if event.lastUpdateDateFormatted %}
+                    <div class="info-card">
+                        <div class="info-label">🔄 Dernière mise à jour</div>
+                        <div class="info-value">{{ event.lastUpdateDateFormatted }}</div>
+                    </div>
+                {% endif %}
+            </div>
+            
+            {% if event.duration %}
+                <div class="duration-card">
+                    <div class="duration-title">⏱️ Durée de l'événement</div>
+                    <div class="duration-value">{{ event.duration }}</div>
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="error-message">
+            <div class="error-icon">❌</div>
+            <h2>Erreur</h2>
+            <p>{{ message|default('Une erreur inattendue s\'est produite.') }}</p>
+            <p style="margin-top: 1rem;">
+                <a href="events.php" style="color: #d63384; text-decoration: underline;">
+                    Retourner à la liste des événements
+                </a>
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}

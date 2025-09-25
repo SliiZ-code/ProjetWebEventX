@@ -65,8 +65,6 @@ class EventService {
 }
     
     public function deleteEvent($id) {
-        $this->getEventById($id);
-        
         $result = $this->eventDataAccess->delete($id);
         
         if (!$result) {
@@ -76,5 +74,15 @@ class EventService {
         return true;
     }
     
+    public function getEventsByUserId($userId) {
+        if (!is_numeric($userId) || $userId <= 0) {
+            throw new InvalidArgumentException('Invalid user ID');
+        }
+        
+        try {
+            return $this->eventDataAccess->findByUserId($userId);
+        } catch (Exception $e) {
+            throw new Exception('Failed to retrieve events for user: ' . $e->getMessage());
+        }
+    }
 }
-?>

@@ -1,0 +1,51 @@
+{# templates/base.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EventX - Plateforme de gestion d'événements{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header.main-header { background-color: #007bff; color: white; padding: 1rem 0; margin-bottom: 2rem; }
+        header.main-header h1 { margin: 0; text-align: center; }
+        nav ul { list-style: none; padding: 0; margin: 1rem 0 0 0; text-align: center; }
+        nav li { display: inline-block; margin: 0 15px; }
+        nav a { color: white; text-decoration: none; font-weight: bold; }
+        nav a:hover { text-decoration: underline; }
+        .footer { margin-top: 2rem; padding: 1rem; text-align: center; color: #6c757d; border-top: 1px solid #dee2e6; }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {# ---- HEADER GLOBAL ---- #}
+    <header class="main-header">
+        <div class="container">
+            <h1>🎉 EventX</h1>
+            <nav>
+                <ul>
+                    <li><a href="/events.php">Événements</a></li>
+                    <li><a href="/about">À propos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    {# ---- CONTENU SPÉCIFIQUE À CHAQUE PAGE ---- #}
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {# ---- FOOTER ---- #}
+    <footer class="footer">
+        <div class="container">
+            {% block footer %}
+                <p>&copy; 2025 EventX - Plateforme de gestion d'événements</p>
+                <p><small>Dernière mise à jour : {{ "now"|date("d/m/Y à H:i") }}</small></p>
+            {% endblock %}
+        </div>
+    </footer>
+</body>
+</html>
