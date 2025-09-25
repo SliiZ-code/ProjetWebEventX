@@ -32,19 +32,6 @@ class UserService {
         return $user;
     }
 
-    public function createUser($userData) {
-        
-        $user = new User($userData);
-        
-        $userId = $this->userDataAccess->create($user);
-        
-        if (!$userId) {
-            throw new Exception('Failed to create user');
-        }
-        
-        return $userId;
-    }
-
     public function login($mail, $password) {
         if (empty($mail) || empty($password)) {
             throw new InvalidArgumentException('Email and password are required');

@@ -46,6 +46,19 @@ class EventDataAccess extends DataAccess {
         return $stmt->fetchAll(PDO::FETCH_CLASS, 'Event');
     }
 
+    public function findByUserId($userId) {
+        $query = "SELECT e.* 
+                  FROM Event e 
+                  INNER JOIN Registration r ON e.id = r.eventId 
+                  WHERE r.userId = ? 
+                  ORDER BY e.startDate ASC";
+        
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute([$userId]);
+        
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Event');
+    }
+
     public function update($entity) {
         if (!$entity instanceof Event) {
             throw new InvalidArgumentException('Entity must be an Event instance');

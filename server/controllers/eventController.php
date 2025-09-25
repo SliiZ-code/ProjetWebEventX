@@ -74,4 +74,15 @@ class EventController extends Controller {
         }
     }
 
+    public function getEventsByUser($userId) {
+        try {
+            $events = $this->eventService->getEventsByUserId($userId);
+            return $this->successResponse($events, 'Events retrieved successfully');
+        } catch (InvalidArgumentException $e) {
+            return $this->errorResponse($e->getMessage(), 400);
+        } catch (Exception $e) {
+            return $this->errorResponse('Failed to retrieve events for user', 500);
+        }
+    }
+
 }

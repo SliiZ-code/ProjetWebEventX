@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../core/Router.php';
 require_once __DIR__ . '/../controllers/EventController.php';
 require_once __DIR__ . '/../controllers/UserController.php';
+require_once __DIR__ . '/../controllers/RegistrationController.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -38,6 +39,16 @@ $router->delete('/events/{id}', function($params) {
     echo $controller->deleteEvent($params['id']);
 });
 
+$router->post('/auth/login', function($params) {
+    $controller = new UserController();
+    echo $controller->login();
+});
+
+$router->post('/auth/register', function($params) {
+    $controller = new UserController();
+    echo $controller->register();
+});
+
 $router->get('/users', function($params) {
     $controller = new UserController();
     echo $controller->getAllUsers();
@@ -48,19 +59,19 @@ $router->get('/users/{id}', function($params) {
     echo $controller->getUser($params['id']);
 });
 
-$router->post('/users', function($params) {
-    $controller = new UserController();
-    echo $controller->createUser();
+$router->get('/users/{id}/events', function($params) {
+    $controller = new EventController();
+    echo $controller->getEventsByUser($params['id']);
 });
 
-$router->post('/auth/login', function($params) {
-    $controller = new UserController();
-    echo $controller->login();
+$router->post('/events/{id}/register', function($params) {
+    $controller = new RegistrationController();
+    echo $controller->registerUserToEvent($params['id']);
 });
 
-$router->post('/auth/register', function($params) {
-    $controller = new UserController();
-    echo $controller->register();
+$router->post('/events/{id}/unregister', function($params) {
+    $controller = new RegistrationController();
+    echo $controller->unregisterUserFromEvent($params['id']);
 });
 
 $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['PATH_INFO'] ?? '/');
