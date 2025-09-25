@@ -168,8 +168,9 @@ if (strpos($uri, '/api') === 0) {
                 "description" => "Register for event",
                 "input" => [
                     "path_params" => ["id" => "integer"],
-                    "headers" => ["Authorization" => "Bearer token (required)"],
-                    "body" => "none"
+                    "body" => [
+                        "userId" => "integer (required)"
+                    ]
                 ],
                 "output" => [
                     "success" => "boolean",
@@ -181,8 +182,9 @@ if (strpos($uri, '/api') === 0) {
                 "description" => "Unregister from event",
                 "input" => [
                     "path_params" => ["id" => "integer"],
-                    "headers" => ["Authorization" => "Bearer token (required)"],
-                    "body" => "none"
+                    "body" => [
+                        "userId" => "integer (required)"
+                    ]
                 ],
                 "output" => [
                     "success" => "boolean",
