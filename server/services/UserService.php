@@ -70,7 +70,7 @@ class UserService {
 
         $user = new User(['mail' => $mail, 'password' => $password]);
         
-        $userId = 3;
+        $userId = $this->userDataAccess->create($user);
         
         if (!$userId) {
             throw new Exception('Failed to register user');
