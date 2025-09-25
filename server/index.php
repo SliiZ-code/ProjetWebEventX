@@ -140,16 +140,16 @@ if (strpos($uri, '/api') === 0) {
                     "data" => "User object or null"
                 ]
             ],
-            "GET /api/users/me" => [
-                "description" => "Get current user info",
+            "GET /api/users/{id}" => [
+                "description" => "Get user by ID",
                 "input" => [
-                    "headers" => ["Authorization" => "Bearer token (required)"],
+                    "path_params" => ["id" => "integer"],
                     "body" => "none"
                 ],
                 "output" => [
                     "success" => "boolean",
                     "message" => "string",
-                    "data" => "User object"
+                    "data" => "User object or null"
                 ]
             ],
             "GET /api/users/{id}/events" => [
