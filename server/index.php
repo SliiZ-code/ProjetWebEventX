@@ -140,18 +140,6 @@ if (strpos($uri, '/api') === 0) {
                     "data" => "User object or null"
                 ]
             ],
-            "GET /api/users/{id}" => [
-                "description" => "Get user by ID",
-                "input" => [
-                    "path_params" => ["id" => "integer"],
-                    "body" => "none"
-                ],
-                "output" => [
-                    "success" => "boolean",
-                    "message" => "string",
-                    "data" => "User object or null"
-                ]
-            ],
             "GET /api/users/{id}/events" => [
                 "description" => "Get events registered for user ID",
                 "input" => [
