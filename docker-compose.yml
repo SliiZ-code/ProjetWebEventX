@@ -1,18 +1,20 @@
 
 services:
   web:
-    image: php:8.2-apache
-    container_name: apache_php
+    build: ./server
+    container_name: eventx_api
     ports:
       - "8000:80"
     volumes:
       - ./server:/var/www/html
     depends_on:
       - db
+    networks:
+      - eventx_network
 
   db:
     image: mysql:8.0
-    container_name: mysql
+    container_name: eventx_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -20,10 +22,16 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
-      - dbdata:/var/lib/mysql
+      - eventx_db_data:/var/lib/mysql
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - eventx_network
 
 volumes:
-  dbdata:
+  eventx_db_data:
+
+networks:
+  eventx_network:
+    driver: bridge

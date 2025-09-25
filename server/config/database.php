@@ -1,11 +1,12 @@
 <?php
 
 class Database{
-    private $host = "localhost";
+    private $host = "db";
     private $db_name = "demo";
     private $username = "user";
     private $password = "password";
-    public $conn;
+
+    private $conn;
 
     public function getConnection(){
         $this->conn = null;
@@ -16,8 +17,7 @@ class Database{
         } catch(PDOException $e){
             echo "Connection error: " . $e->getMessage();
         }
+        return $this->conn;
     }
 
 }
-
-?>
