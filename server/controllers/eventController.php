@@ -73,4 +73,26 @@ class EventController extends Controller {
             return $this->errorResponse('Failed to delete event', 500);
         }
     }
+
+    public function registerEvent($id){
+        try {
+            $this->eventService->registerToEvent($id);
+            return $this->successResponse(null, 'Registered to event successfully');
+        } catch (InvalidArgumentException $e) {
+            return $this->errorResponse($e->getMessage(), 400);
+        } catch (Exception $e) {
+            return $this->errorResponse('Failed to register for event', 500);
+        }
+    }
+
+    public function unregisterEvent($id){
+        try {
+            $this->eventService->unregisterFromEvent($id);
+            return $this->successResponse(null, 'Unregistered from event successfully');
+        } catch (InvalidArgumentException $e) {
+            return $this->errorResponse($e->getMessage(), 400);
+        } catch (Exception $e) {
+            return $this->errorResponse('Failed to unregister from event', 500);
+        }
+    }
 }
