@@ -1,72 +1,78 @@
 <?php
 
+require_once __DIR__ . '/../core/Router.php';
 require_once __DIR__ . '/../controllers/EventController.php';
+require_once __DIR__ . '/../controllers/UserController.php';
+require_once __DIR__ . '/../controllers/RegistrationController.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    exit(0);
-}
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') exit(0);
 
-$method = $_SERVER['REQUEST_METHOD'];
-$request = explode('/', trim($_SERVER['PATH_INFO'] ?? '', '/'));
-$resource = $request[0] ?? '';
+$router = new Router();
 
-try {
-    switch($resource) {
-        case 'events':
-            $eventController = new EventController();
-            
-            switch($method) {
-                case 'GET':
-                    if(isset($request[1]) && is_numeric($request[1])) {
-                        echo $eventController->getEvent($request[1]);
-                    } else {
-                        echo $eventController->getAllEvents();
-                    }
-                    break;
-                    
-                case 'POST':
-                    echo $eventController->createEvent();
-                    break;
-                    
-                case 'PUT':
-                    if(isset($request[1]) && is_numeric($request[1])) {
-                        echo $eventController->updateEvent($request[1]);
-                    } else {
-                        http_response_code(400);
-                        echo json_encode(["success" => false, "message" => "Event ID required"]);
-                    }
-                    break;
-                    
-                case 'DELETE':
-                    if(isset($request[1]) && is_numeric($request[1])) {
-                        echo $eventController->deleteEvent($request[1]);
-                    } else {
-                        http_response_code(400);
-                        echo json_encode(["success" => false, "message" => "Event ID required"]);
-                    }
-                    break;
-                    
-                default:
-                    http_response_code(405);
-                    echo json_encode(["success" => false, "message" => "Method not allowed"]);
-            }
-            break;
-            
-        default:
-            http_response_code(404);
-            echo json_encode(["success" => false, "message" => "Resource not found"]);
-    }
-    
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode([
-        "success" => false, 
-        "message" => "Server error", 
-        "error" => $e->getMessage()
-    ]);
-}
+$router->get('/events', function($params) {
+    $controller = new EventController();
+    echo $controller->getAllEvents();
+});
+
+$router->get('/events/{id}', function($params) {
+    $controller = new EventController();
+    echo $controller->getEvent($params['id']);
+});
+
+$router->post('/events', function($params) {
+    $controller = new EventController();
+    echo $controller->createEvent();
+});
+
+$router->put('/events/{id}', function($params) {
+    $controller = new EventController();
+    echo $controller->updateEvent($params['id']);
+});
+
+$router->delete('/events/{id}', function($params) {
+    $controller = new EventController();
+    echo $controller->deleteEvent($params['id']);
+});
+
+$router->post('/auth/login', function($params) {
+    $controller = new UserController();
+    echo $controller->login();
+});
+
+$router->post('/auth/register', function($params) {
+    $controller = new UserController();
+    echo $controller->register();
+});
+
+$router->get('/users', function($params) {
+    $controller = new UserController();
+    echo $controller->getAllUsers();
+});
+
+$router->get('/users/{id}', function($params) {
+    $controller = new UserController();
+    echo $controller->getUser($params['id']);
+});
+
+$router->get('/users/{id}/events', function($params) {
+    $controller = new EventController();
+    echo $controller->getEventsByUser($params['id']);
+});
+
+$router->post('/events/{id}/register', function($params) {
+    $controller = new RegistrationController();
+    echo $controller->registerUserToEvent($params['id']);
+});
+
+$router->post('/events/{id}/unregister', function($params) {
+    $controller = new RegistrationController();
+    echo $controller->unregisterUserFromEvent($params['id']);
+});
+
+$router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['PATH_INFO'] ?? '/');
+?>
