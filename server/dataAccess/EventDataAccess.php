@@ -34,20 +34,8 @@ class EventDataAccess extends DataAccess {
         $stmt = $this->connection->prepare($query);
         $stmt->execute([$id]);
         
-        $data = $stmt->fetch();
-        if ($data) {
-            $event = new Event();
-            $event->id = $data['id'];
-            $event->name = $data['name'];
-            $event->description = $data['description'];
-            $event->startDate = $data['startDate'];
-            $event->endDate = $data['endDate'];
-            $event->ownerId = $data['ownerId'];
-            $event->creationDate = $data['creationDate'];
-            $event->updateDate = $data['updateDate'];
-            return $event;
-        }
-        return null;
+        $event = $stmt->fetchObject('Event');
+        return $event ?: null;
     }
 
     public function readAll() {
@@ -55,20 +43,7 @@ class EventDataAccess extends DataAccess {
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         
-        $events = [];
-        while ($data = $stmt->fetch()) {
-            $event = new Event();
-            $event->id = $data['id'];
-            $event->name = $data['name'];
-            $event->description = $data['description'];
-            $event->startDate = $data['startDate'];
-            $event->endDate = $data['endDate'];
-            $event->ownerId = $data['ownerId'];
-            $event->creationDate = $data['creationDate'];
-            $event->updateDate = $data['updateDate'];
-            $events[] = $event;
-        }
-        return $events;
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Event');
     }
 
     public function update($entity) {
@@ -96,4 +71,3 @@ class EventDataAccess extends DataAccess {
         return $stmt->execute([$id]);
     }
 }
-?>

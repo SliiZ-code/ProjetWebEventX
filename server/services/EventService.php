@@ -65,8 +65,6 @@ class EventService {
 }
     
     public function deleteEvent($id) {
-        $this->getEventById($id);
-        
         $result = $this->eventDataAccess->delete($id);
         
         if (!$result) {
@@ -74,9 +72,5 @@ class EventService {
         }
         
         return true;
-    }
-
-    public function registerToEvent
-    
+    } 
 }
-?>
