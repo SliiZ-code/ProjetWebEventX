@@ -30,28 +30,21 @@ if ($path === '') {
 // Initialiser le contrôleur d'événements
 $eventController = new EventController($twig);
 
-// Router simple
-try {
-    switch ($path) {
-        case '/':
-        case '/events.php':
-        case '/events':
-            // Affichage de la liste des événements
-            if ($method === 'GET') {
-                echo $eventController->showAllEvents();
-            } else {
-                http_response_code(405);
-                echo "Méthode non autorisée";
-            }
-            break;
-        
-        default:
-            // Par défaut, afficher la liste des événements
+switch ($path) {
+    case '/':
+    case '/events.php':
+    case '/events':
+        // Affichage de la liste des événements
+        if ($method === 'GET') {
             echo $eventController->showAllEvents();
-            break;
-    }
-} catch (Exception $e) {
-    // Gestion des erreurs générales
-    http_response_code(500);
-    echo "Erreur interne du serveur: " . htmlspecialchars($e->getMessage());
+        } else {
+            http_response_code(405);
+            echo "Méthode non autorisée";
+        }
+        break;
+    
+    default:
+        // Par défaut, afficher la liste des événements
+        echo $eventController->showAllEvents();
+        break;
 }

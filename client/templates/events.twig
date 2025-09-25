@@ -90,17 +90,5 @@
                 </a>
             {% endfor %}
         </div>
-    {% else %}
-        <!-- Aucun événement trouvé -->
-        <div class="no-events">
-            <div class="no-events-icon">📅</div>
-            <h3>Aucun événement trouvé</h3>
-            <p>Il n'y a actuellement aucun événement à afficher.</p>
-            {% if not success %}
-                <p style="margin-top: 1rem; color: #dc3545;">
-                    Vérifiez votre connexion ou contactez l'administrateur.
-                </p>
-            {% endif %}
-        </div>
     {% endif %}
 {% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.twig" %}
+
+{% block title %}Bienvenue sur EventX{% endblock %}
+
+{% block extra_head %}
+<style>
+    .welcome-box {
+        text-align: center;
+        background-color: white;
+        border-radius: 8px;
+        padding: 3rem 2rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin: 2rem auto;
+        max-width: 600px;
+    }
+    .welcome-box h2 {
+        color: #007bff;
+        margin-bottom: 1rem;
+    }
+    .welcome-box p {
+        color: #6c757d;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+    .btn {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        display: inline-block;
+        transition: background-color 0.3s;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+        text-decoration: none;
+        color: white;
+    }
+    .redirect-info {
+        margin-top: 2rem;
+        padding: 1rem;
+        background-color: #e7f3ff;
+        border-left: 4px solid #007bff;
+        border-radius: 4px;
+    }
+</style>
+<meta http-equiv="refresh" content="3; url=login.php">
+{% endblock %}
+
+{% block content %}
+<div class="welcome-box">
+    <h2>🎉 Bienvenue sur EventX</h2>
+    <p>Votre plateforme de gestion d'événements</p>
+    
+    <div class="redirect-info">
+        <p><strong>Redirection automatique vers la page de connexion dans 3 secondes...</strong></p>
+        <p>Si la redirection ne fonctionne pas, cliquez sur le bouton ci-dessous :</p>
+        <a href="login.php" class="btn">Se connecter</a>
+    </div>
+</div>
+{% endblock %}

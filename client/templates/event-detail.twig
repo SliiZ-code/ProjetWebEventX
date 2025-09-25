@@ -84,16 +84,5 @@
                 </div>
             {% endif %}
         </div>
-    {% else %}
-        <div class="error-message">
-            <div class="error-icon">❌</div>
-            <h2>Erreur</h2>
-            <p>{{ message|default('Une erreur inattendue s\'est produite.') }}</p>
-            <p style="margin-top: 1rem;">
-                <a href="events.php" style="color: #d63384; text-decoration: underline;">
-                    Retourner à la liste des événements
-                </a>
-            </p>
-        </div>
-    {% endif %}
+
 {% endblock %}
