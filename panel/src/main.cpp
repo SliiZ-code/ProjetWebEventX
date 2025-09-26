@@ -1,19 +1,16 @@
-#include <SFML/Graphics.hpp>
+#include "Application.hpp"
+#include <iostream>
+#include <exception>
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML window");
-
-    while (window.isOpen())
-    {
-        while (const std::optional event = window.pollEvent())
-        {
-            // Close window: exit
-            if (event->is<sf::Event::Closed>())
-                window.close();
-        }
-
-        // Clear screen
-        window.clear();
+int main() {
+    try {
+        Application app;
+        return app.run();
+    } catch (const std::exception& e) {
+        std::cerr << "Application error: " << e.what() << std::endl;
+        return 1;
+    } catch (...) {
+        std::cerr << "Unknown error occurred" << std::endl;
+        return 1;
     }
 }
