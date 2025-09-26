@@ -15,9 +15,9 @@ $authController = new AuthController($twig);
 
 // Gestion simple GET/POST
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    echo $authController->showLoginForm();
+    echo $authController->showRegisterForm();
 } else {
-    echo $authController->login();
+    echo $authController->register();
 }
 
 ?>

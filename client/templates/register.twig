@@ -1,0 +1,50 @@
+{% extends 'base.twig' %}
+
+{% block title %}Inscription - EventX{% endblock %}
+
+{% block extra_head %}
+<style>
+    .form-container { max-width: 400px; margin: 2rem auto; }
+    .form-box { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .form-header { text-align: center; margin-bottom: 2rem; }
+    .form-header h2 { color: #28a745; margin: 0; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+    .form-group input { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+    .btn { width: 100%; padding: 0.75rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    .btn:hover { background: #218838; }
+    .form-links { text-align: center; margin-top: 1rem; }
+    .form-links a { color: #28a745; text-decoration: none; }
+    .alert { padding: 1rem; margin-bottom: 1rem; border-radius: 4px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-box">
+        <div class="form-header">
+            <h2>Inscription</h2>
+        </div>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required 
+                       value="{{ email|default('') }}" placeholder="votre@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required 
+                       placeholder="Minimum 6 caracteres">
+            </div>
+
+            <button type="submit" class="btn">Creer mon compte</button>
+        </form>
+
+        <div class="form-links">
+            <a href="login.php">Deja un compte ? Se connecter</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
