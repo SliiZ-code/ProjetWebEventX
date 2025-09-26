@@ -39,7 +39,7 @@ class UserService {
         
         $user = $this->userDataAccess->findByEmail($mail);
 
-        if (!$user || $password !== $user->password) {
+        if (!$user || !password_verify($password, $user->password)) {
             throw new Exception('Invalid email or password');
         }
 
@@ -55,7 +55,8 @@ class UserService {
             throw new Exception('Email already in use');
         }
 
-        $user = new User(['mail' => $mail, 'password' => $password]);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $user = new User(['mail' => $mail, 'password' => $hashedPassword]);
         
         $userId = $this->userDataAccess->create($user);
         
