@@ -96,7 +96,7 @@ if (strpos($uri, '/api') === 0) {
                 "output" => [
                     "success" => "boolean",
                     "message" => "string",
-                    "data" => ["token" => "string", "user" => "User object"],
+                    "data" => ["userId" => "integer"],
                     "errors" => "array (on failure)"
                 ]
             ],
@@ -105,15 +105,13 @@ if (strpos($uri, '/api') === 0) {
                 "input" => [
                     "body" => [
                         "mail" => "string (required)",
-                        "password" => "string (required)",
-                        "firstname" => "string (required)",
-                        "lastname" => "string (required)"
+                        "password" => "string (required)"
                     ]
                 ],
                 "output" => [
                     "success" => "boolean",
                     "message" => "string",
-                    "data" => ["id" => "integer"],
+                    "data" => ["userId" => "integer"],
                     "errors" => "array (on validation failure)"
                 ]
             ],
