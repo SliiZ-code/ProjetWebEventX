@@ -1,1 +1,4 @@
 ./server/Dockerfile
+build/
+vcpkg_installed/
+.vscode/
