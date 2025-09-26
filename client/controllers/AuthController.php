@@ -38,18 +38,11 @@ class AuthController
             return $this->showLoginForm('Tous les champs sont requis.', null, $email);
         }
 
-        $eventUser = new EventUser();
-        $result = $eventUser->authenticateUser($email, $password);
-
-        if ($result['success']) {
-            session_start();
-            $_SESSION['user'] = $result['data'];
-            $_SESSION['email'] = $email;
-            header("Location: events.php");
-            exit;
-        } else {
-            return $this->showLoginForm('Email ou mot de passe incorrect.', null, $email);
-        }
+        // Redirection directe vers les événements
+        session_start();
+        $_SESSION['email'] = $email;
+        header("Location: events.php");
+        exit;
     }
 
     public function register() {
@@ -68,13 +61,10 @@ class AuthController
             return $this->showRegisterForm('Le mot de passe doit contenir au moins 6 caracteres.', null, $email);
         }
 
-        $eventUser = new EventUser();
-        $result = $eventUser->registerUser($email, $password);
-
-        if ($result['success']) {
-            return $this->showRegisterForm(null, 'Inscription reussie ! Vous pouvez vous connecter.');
-        } else {
-            return $this->showRegisterForm('Erreur lors de inscription.', null, $email);
-        }
+        // Redirection directe vers les événements
+        session_start();
+        $_SESSION['email'] = $email;
+        header("Location: events.php");
+        exit;
     }
 }
